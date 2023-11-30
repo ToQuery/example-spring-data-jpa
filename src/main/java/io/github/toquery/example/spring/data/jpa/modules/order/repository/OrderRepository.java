@@ -7,6 +7,6 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 /**
  *
  */
-public interface OrderRepository extends JpaRepositoryImplementation<Order, Long>, QuerydslPredicateExecutor<Order> {
+public interface OrderRepository extends JpaRepositoryImplementation<Order, Long>{ // , QuerydslPredicateExecutor<Order> {
 
 }

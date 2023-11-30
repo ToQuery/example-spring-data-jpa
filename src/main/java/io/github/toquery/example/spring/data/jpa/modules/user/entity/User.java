@@ -1,14 +1,15 @@
-package io.github.toquery.example.spring.data.jpa.modules.order.entity;
+package io.github.toquery.example.spring.data.jpa.modules.user.entity;
 
+import io.github.toquery.example.spring.data.jpa.modules.order.entity.Order;
 import io.github.toquery.example.spring.data.jpa.modules.product.entity.Product;
-import io.github.toquery.example.spring.data.jpa.modules.user.entity.User;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,10 +19,9 @@ import java.util.Objects;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@ToString
 @Entity
-@Table(name = "tb_order")
-public class Order implements Serializable {
+@Table(name = "tb_user")
+public class User implements Serializable {
 
 
     @Serial
@@ -31,22 +31,22 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "address_id")
-    private Long addressId;
+    @Column(name = "nick_name", length = 32)
+    private String nickName;
 
-    @Column(name = "order_status")
-    private Integer orderStatus;
+    @Column(name = "deleted")
+    private Boolean deleted = false;
 
-    @Column(name = "create_date_time")
-    private LocalDateTime createDateTime;
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
-
-    @OneToMany
-    private List<OrderProduct> orderProducts;
-
+    @ManyToMany
+    @JoinTable(
+            name = "tb_favorite",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private List<Product> products;
 
     @Override
     public final boolean equals(Object o) {
@@ -55,7 +55,7 @@ public class Order implements Serializable {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Order order = (Order) o;
+        User order = (User) o;
         return getId() != null && Objects.equals(getId(), order.getId());
     }
 
@@ -63,4 +63,6 @@ public class Order implements Serializable {
     public final int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
     }
+
+
 }

@@ -1,0 +1,1 @@
+CREATE DATABASE example_spring_data_jpa;
