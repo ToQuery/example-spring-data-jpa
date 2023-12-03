@@ -28,7 +28,7 @@ public class Order implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "address_id")
@@ -40,11 +40,17 @@ public class Order implements Serializable {
     @Column(name = "create_date_time")
     private LocalDateTime createDateTime;
 
-    @ManyToOne
+    /**
+     * 价格
+     */
+    @Column(name = "price")
+    private Double price;
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<OrderProduct> orderProducts;
 
 

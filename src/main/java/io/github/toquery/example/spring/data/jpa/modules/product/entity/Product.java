@@ -27,19 +27,21 @@ public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "product_name", length = 32)
     private String productName;
 
+    @Column(name = "price")
+    private Double price;
+
+    @Column(name = "sales_volume")
+    private Integer salesVolume;
+
     @Column(name = "deleted")
     private Boolean deleted = false;
 
-//    @ManyToMany(mappedBy = "products")
-//    private List<Order> orders;
-//    @ManyToMany(mappedBy = "products")
-//    private List<Favorite> favorites;
 
     @Override
     public final boolean equals(Object o) {

@@ -1,6 +1,6 @@
 package io.github.toquery.example.spring.data.jpa.modules.order.entity;
 
-import io.github.toquery.example.spring.data.jpa.modules.user.entity.User;
+import io.github.toquery.example.spring.data.jpa.modules.product.entity.Product;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -29,16 +29,28 @@ public class OrderProduct implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "order_status")
-    private Integer orderStatus;
-
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Order order;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    private Product product;
+
+    /**
+     * 数量
+     */
+    @Column(name = "num")
+    private Integer num;
+
+    /**
+     * 价格
+     */
+    @Column(name = "price")
+    private Double price;
 
     @Override
     public final boolean equals(Object o) {

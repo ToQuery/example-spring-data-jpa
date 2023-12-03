@@ -1,0 +1,25 @@
+type Query {
+    userById(id: ID): User
+}
+
+type User {
+    id: ID
+    nickName: String
+    deleted: Boolean
+    orders: [Order]
+}
+
+type Order {
+    id: ID
+    addressId: Int
+    orderStatus: Int
+    orderProducts: [OrderProduct]
+}
+
+
+type OrderProduct {
+    id: ID
+    order: Order
+    num: Int
+}
+

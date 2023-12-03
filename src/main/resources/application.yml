@@ -1,23 +1,36 @@
 
 spring:
+
+  threads:
+    virtual:
+      enabled: true
+
+  graphql:
+    graphiql:
+      enabled: true
+
+
   sql:
     init:
-      mode: embedded
+      mode: never
       continue-on-error: true
       schema-locations: classpath:/database/schema.sql
       username: postgres
       password: postgres
+
   datasource:
-    url: jdbc:postgresql://localhost:5432/example_spring_data_jpa
+    url: jdbc:postgresql://postgres.example-spring-data-jpa.orb.local:5432/example_spring_data_jpa
     username: postgres
     password: postgres
 
   jpa:
     show-sql: true
+    generate-ddl: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none # none, create, create-drop, validate, update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
 
 
